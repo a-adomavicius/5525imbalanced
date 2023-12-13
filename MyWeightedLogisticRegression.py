@@ -38,9 +38,9 @@ class MyWeightedLogisticRegression:
     def predict(self, X):
         w_avg = self.w_sum / self.iters
         return np.round(sigmoid(X @ w_avg))
-    def predict_probs(self, X):
+    def predict_values(self, X):
         w_avg = self.w_sum / self.iters
-        return sigmoid(X @ w_avg)
+        return X @ w_avg
     def predict_proportion(self, X, prop): #predict a certain number of 1s
         w_avg = self.w_sum / self.iters
         probs = sigmoid(X @ w_avg)
