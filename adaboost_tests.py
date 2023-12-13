@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 from sklearn.tree import DecisionTreeClassifier
 import sklearn.metrics 
+import matplotlib.pyplot as plt
 
 from my_cross_val_imbalanced import my_cross_val_imbalanced, precision_recall_f1
 from MyWeightedAdaboost import MyWeightedAdaboost
@@ -71,3 +72,7 @@ print("Test precision: " + str(precision))
 print("Test recall: " + str(recall))
 print("Test F1 score: " + str(f1))
 print("Test AUPRC score: " + str(auprc)) 
+
+display = sklearn.metrics.PrecisionRecallDisplay.from_predictions(y_test, y_values, name="Adaboost")
+display.plot()
+plt.show()
