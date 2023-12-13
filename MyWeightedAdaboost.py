@@ -11,7 +11,7 @@ class MyWeightedAdaboost:
         self.alphas = []
         self.w1 = w1
         
-    def fit(self, X, y): # y labeled in 1 and -1 (make sure to do that before!)
+    def fit(self, X, y):
         
         (n, d) = X.shape
         weights = np.array([(1/n) for i in range(n)])
@@ -23,8 +23,7 @@ class MyWeightedAdaboost:
         weights = weights/np.sum(weights)
         
         for t in range(self.num_estimators):
-            
-            #X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=t)
+           
             estimator = copy.deepcopy(self.estimator)
             
             #generating dataset to fit from weight distribution
@@ -33,18 +32,18 @@ class MyWeightedAdaboost:
             y_samp = y[samples]
             
             estimator.fit(X_samp, y_samp)
-            print(np.argmax(estimator.feature_importances_)) # prints most important column, also add in dataframe to figure out what it is???
-            predictions = estimator.predict(X) #do you just do the training set here?
+            #print(np.argmax(estimator.feature_importances_)) # prints most important column, can use to check dataframe and see column name
+            predictions = estimator.predict(X)
             
             error = 0
             for i in range(n):
-                if predictions[i] != y[i]: # introduce parameter here to add extra class weight for when y = 1?
+                if predictions[i] != y[i]:
                     error += weights[i] 
 
             alpha = (1/2)*np.log((1 - error)/error)
             
             for i in range(n):
-                if predictions[i] != y[i]: #same here introduce some weight...
+                if predictions[i] != y[i]: 
                     weights[i] *= np.exp(alpha)
                 else:
                     weights[i] *= np.exp(-alpha)
